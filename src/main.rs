@@ -14,6 +14,7 @@ fn main() {
 
     println!("===== Selamat datang di To Do App CLI =====");
     println!("Ketik 'add <task>' untuk tambah tugas baru");
+    println!("Ketik 'del <task_id>' untuk hapus tugas");
     println!("Ketik 'list' untuk lihat daftar tugas");
     println!("Ketik 'exit' untuk keluar");
 
@@ -65,6 +66,26 @@ fn main() {
                     }
                 } else {
                     println!("Tugas Kosong. Tambah tugas dengan format 'add <task>'")
+                }
+            }
+
+            Some(&"del") => {
+                if let Some(id) = parts.get(1) {
+                    match id.parse::<u8>() {
+                        Ok(id) => {
+                            if let Some(i) = todos.iter().position(|todo| todo.id == id) {
+                                let del = todos.remove(i);
+                                println!("Task '{}' telah berhasil dihapus", del.task);
+                            } else {
+                                println!("ID Tidak di temukan");
+                            }
+                        }
+                        Err(_) => println!("ID tidak valid"),
+                    }
+                } else {
+                    println!("gagal menghapus");
+                    println!("{parts:?}");
+                    println!("{todos:?}");
                 }
             }
 
