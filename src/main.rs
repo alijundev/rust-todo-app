@@ -31,15 +31,33 @@ fn main() {
 
         match parts.get(0) {
             Some(&"add") => {
-                if let Some(task) = parts.get(1) {
-                    id += 1;
-                    let new_task = Todo {
-                        id: id,
-                        task: task.to_string(),
-                        is_completed: false,
-                    };
-                    todos.push(new_task);
-                    println!("Berhasil menambahkan task '{task}'")
+                if let Some(tasks) = parts.get(1) {
+                    let tasks: Vec<&str> = tasks.split(" ").collect();
+                    if tasks.len() > 1 {
+                        for task in tasks{
+                            id += 1;
+                            let new_task = Todo {
+                                id: id,
+                                task: task.to_string(),
+                                is_completed: false,
+                            };
+                            todos.push(new_task);
+                            println!("Berhasil menambahkan task '{task}'")
+                        }
+                    }else {
+                        id += 1;
+                        let task = tasks[0];
+                        let new_task = Todo {
+                            id: id,
+                            task: task.to_string(),
+                            is_completed: false,
+                        };
+                        todos.push(new_task);
+                        println!("Berhasil menambahkan task '{task}'")
+
+                    }
+
+
                 } else {
                     println!("Tolongkan masukkan task yang ingin ditambahkan")
                 }
